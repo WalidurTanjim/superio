@@ -32,12 +32,12 @@ const JobCategories = () => {
                         const { _id, category, icon } = ctg;
 
                         return (
-                            <Link to={`/findJobs/${_id}`}>
-                                <div key={_id} className='category p-3 border rounded-xl flex gap-2 cursor-default hover:shadow-md transform transition-all ease-in-out duration-150'>
+                            <Link to={`/findJobs/${_id}`} key={_id}>
+                                <div className='category p-3 border rounded-xl flex gap-2 cursor-default hover:shadow-md transform transition-all ease-in-out duration-150 group'>
                                     <div className='categoryIconDiv border rounded-md p-2 bg-blue-50'>
                                         <img src={icon} alt="" className='categoryIcon w-[25px]' />
                                     </div>
-                                    <span className='text-slate-700 font-medium'>{category}</span>
+                                    <span className='text-slate-700 font-medium group-hover:text-blue-500'>{category}</span>
                                 </div>
                             </Link>
                         )
