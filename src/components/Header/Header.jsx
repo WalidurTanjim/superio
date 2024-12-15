@@ -27,6 +27,7 @@ const Header = () => {
                         </button>
                     </div>
 
+                    {/* nav links */}
                     <div id="hs-navbar-alignment" className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto md:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
                         <div className="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
                             <NavLink to="/" className="font-medium text-blue-500 focus:outline-none" aria-current="page">Home</NavLink>
