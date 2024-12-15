@@ -4,15 +4,16 @@ import bookmark from '../../assets/bookmark.png';
 import bookmark_fill from '../../assets/bookmark-fill.png';
 
 const JobCard = ({ job }) => {
-    const { _id, title, job_description, responsibilities, requirements, expiration_date, salary, category, job_type, hr_name, hr_email, company_logo, company_name } = job;
+    const { _id, title, job_description, responsibilities, requirements, expiration_date, salary, category, job_type, job_category, hr_name, hr_email, company_logo, company_name } = job;
 
     return (
-        <div className='jobCard p-2 rounded-md border cursor-default'>
+        <div className='jobCard p-3 rounded-md border cursor-default group hover:shadow-md transition-all ease-in-out duration-150'>
             {/* company logo, job title & bookmark icon */}
             <div className='flex justify-between'>
+                {/* company logo & job title */}
                 <div className='flex gap-2'>
                     <img src={company_logo} alt="" className='w-[35px] h-[35px] rounded-md' />
-                    <h1 className='text-slate-800 text-sm font-medium cursor-pointer'>{title}</h1>
+                    <h1 className='text-slate-800 text-sm font-medium cursor-pointer group-hover:text-blue-500 transition-all ease-in-out duration-100'>{title}</h1>
                 </div>
 
                 {/* bookmark icon */}
@@ -21,7 +22,8 @@ const JobCard = ({ job }) => {
                 </div>
             </div>
 
-            <div className='mt-2 flex flex-wrap gap-2'>
+            {/* category, salary & location */}
+            <div className='my-2 flex flex-wrap gap-2'>
                 {/* category */}
                 <h1 className='text-xs text-gray-500 flex items-center'>
                     <AdjustmentsHorizontalIcon className='size-3' />
@@ -40,6 +42,10 @@ const JobCard = ({ job }) => {
                     <span className='ps-1'>London</span>
                 </h1>
             </div>
+
+            {/* job_type & job_category */}
+            <span className="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500 me-2">{job_type}</span>
+            <span className="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500 me-2">{job_category}</span>
         </div>
     );
 };
