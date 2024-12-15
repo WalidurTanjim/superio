@@ -1,0 +1,47 @@
+[
+    {
+        "_id": 1,
+        "category": "Accounting/Finance",
+        "icon": "https://i.ibb.co.com/F4Jx36b/finance.png"
+    },
+    {
+        "_id": 2,
+        "category": "Marketing",
+        "icon": "https://i.ibb.co.com/2W9sLby/marketing.png"
+    },
+    {
+        "_id": 3,
+        "category": "Design",
+        "icon": "https://i.ibb.co.com/hyWJz8B/design.png"
+    },
+    {
+        "_id": 4,
+        "category": "Development",
+        "icon": "https://i.ibb.co.com/gyhN97d/development.png"
+    },
+    {
+        "_id": 5,
+        "category": "Human Resource",
+        "icon": "https://i.ibb.co.com/2ZPvMQM/human-resource.png"
+    },
+    {
+        "_id": 6,
+        "category": "Automotive Jobs",
+        "icon": "https://i.ibb.co.com/6RV1bv9/automotive.png"
+    },
+    {
+        "_id": 7,
+        "category": "Customer Service",
+        "icon": "https://i.ibb.co.com/Thbk3sb/customer-service.png"
+    },
+    {
+        "_id": 8,
+        "category": "Health & Care",
+        "icon": "https://i.ibb.co.com/qYRZgYz/health-care.png"
+    },
+    {
+        "_id": 9,
+        "category": "Project Management",
+        "icon": "https://i.ibb.co.com/16xQkGc/project-management.png"
+    }
+]
