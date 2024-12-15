@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const FeaturedJobs = () => {
     const [featuredJobs, setFeaturedJobs] = useState([]);
     const axiosPublic = useAxiosPublic();
-    console.log(featuredJobs);
+    // console.log(featuredJobs);
 
     useEffect(() => {
         const fetchData = async() => {

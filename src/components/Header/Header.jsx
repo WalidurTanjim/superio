@@ -4,7 +4,7 @@ import logo from '../../assets/logo.svg';
 
 const Header = () => {
     return (
-        <header className="header">
+        <header className="header sticky top-0 z-50">
             <div className="container mx-auto px-6 flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3 dark:bg-neutral-800">
                 <nav className="max-w-[85rem] w-full mx-auto flex flex-wrap basis-full items-center justify-between">
                     {/* logo */}
