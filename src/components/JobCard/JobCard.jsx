@@ -1,7 +1,5 @@
 import React from 'react';
 import { BookmarkIcon, MapPinIcon, BanknotesIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
-import bookmark from '../../assets/bookmark.png';
-import bookmark_fill from '../../assets/bookmark-fill.png';
 import { Link } from 'react-router-dom';
 
 const JobCard = ({ job }) => {

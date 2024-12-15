@@ -11,7 +11,7 @@ function App() {
     {path: '/', errorElement: <ErrorPage />, element: <MainLayout />, children: [
       {path: '/', element: <Home />},
       {path: '/findJobs', element: <FindJobs />, loader: () => fetch('http://localhost:5000/jobs')},
-      {path: '/findJobs/:category/:id', element: <JobDetails />}
+      {path: '/findJobs/:category/:id', element: <JobDetails />, loader: ({params}) => fetch(`http://localhost:5000/findJobs/${params.category}/${params.id}`)}
     ]}
   ])
 
