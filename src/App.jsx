@@ -8,6 +8,7 @@ import JobDetails from './components/JobDetails/JobDetails'
 import SignIn from './pages/SignIn/SignIn'
 import SignUp from './pages/SignUp/SignUp'
 import AddJob from './pages/AddJob/AddJob'
+import PrivateRoute from './PrivateRoute/PrivateRoute'
 
 function App() {
   const routes = createBrowserRouter([
@@ -15,7 +16,7 @@ function App() {
       {path: '/', element: <Home />},
       {path: '/findJobs', element: <FindJobs />, loader: () => fetch('http://localhost:5000/jobs')},
       {path: '/findJobs/:category/:id', element: <JobDetails />, loader: ({params}) => fetch(`http://localhost:5000/findJobs/${params.category}/${params.id}`)},
-      {path: '/addJob', element: <AddJob />},
+      {path: '/addJob', element: <PrivateRoute><AddJob /></PrivateRoute>},
       {path: '/signIn', element: <SignIn />},
       {path: '/signUp', element: <SignUp />}
     ]}
