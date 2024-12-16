@@ -49,7 +49,7 @@ const JobDetails = () => {
                 {/* apply for jobs button & bookmark icon */}
                 <div className='col-span-1 lg:col-span-1'>
                     <div className='flex gap-3'>
-                        <button type="button" class="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Apply for job</button>
+                        <button type="button" className="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Apply for job</button>
 
                         <div className='p-2 rounded-lg hover:bg-blue-100 active:bg-transparent'>
                             <BookmarkIcon className='size-5 text-gray-500 hover:text-gray-600 active:text-gray-500' />
