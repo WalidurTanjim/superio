@@ -16,7 +16,7 @@ const Header = () => {
         .catch(err => {
             console.error(err);
         })
-    }
+    };
 
 
     return (
@@ -49,8 +49,9 @@ const Header = () => {
                                         
                                         {
                                             showProfileBtns && user ?
-                                            <div className='absolute mt-3 right-0 border rounded-md w-40 bg-white'>
+                                            <div className='absolute mt-3 right-0 border rounded-md w-48 bg-white'>
                                                 <p className='w-full py-2 px-2 text-sm hover:bg-gray-100 rounded-md'>Profile</p>
+                                                <p className='w-full py-2 px-2 text-sm hover:bg-gray-100 rounded-md'>Add Job</p>
                                                 <p className='w-full py-2 px-2 text-sm hover:bg-gray-100 rounded-md' onClick={signOutHandler}>Sign out</p>
                                             </div> : undefined
                                         }
