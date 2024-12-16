@@ -4,12 +4,26 @@ import { Link } from 'react-router-dom';
 import SocialLogIn from '../../components/SocialLogIn/SocialLogIn';
 
 const SignUp = () => {
+    const [createPasswordErrMsg, setCreatePasswordErrMsg] = useState('');
+    const [repeatPasswordErrMsg, setRepeatPasswordErrMsg] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [errMsg, setErrMsg] = useState('');
+    const passRegEx = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = (data) => {
+        setCreatePasswordErrMsg('');
+        setRepeatPasswordErrMsg('');
         setErrMsg('');
+
+        // createPassword & repeatPassword validation
+        if(!passRegEx.test(data.createPassword)){
+            return setCreatePasswordErrMsg('Password should be uppercase, lowercase, digits & at least 6 chars');
+        }
+        if(data.repeatPassword !== data.createPassword){
+            return setRepeatPasswordErrMsg('Both are not equal');
+        }
+
         console.log(data);
     }
 
@@ -23,26 +37,28 @@ const SignUp = () => {
 
                         {/* fullname */}
                         <div className="w-full mb-3">
-                            <label for="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Full Name</label>
+                            <label htmlFor="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Full Name</label>
                             <input type="text" id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Full Name" {...register("fullname", { required: true})} />
                         </div>
 
                         {/* email */}
                         <div className="w-full mb-3">
-                            <label for="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Email Address</label>
+                            <label htmlFor="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Email Address</label>
                             <input type="email" id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Email Address" {...register("email", { required: true})} />
                         </div>
 
                         {/* create password */}
                         <div className="w-full mb-3">
-                            <label for="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Create Password</label>
+                            <label htmlFor="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Create Password</label>
                             <input type={showPassword ? 'text' : 'password'} id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Create Password" {...register("createPassword", { required: true})} />
+                            {createPasswordErrMsg ? <p className='text-xs text-red-500 mt-1'>{createPasswordErrMsg}</p> : undefined}
                         </div>
 
                         {/* repeat password */}
                         <div className="w-full mb-3">
-                            <label for="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Repeat Password</label>
+                            <label htmlFor="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Repeat Password</label>
                             <input type={showPassword ? 'text' : 'password'} id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Repeat Password" {...register("repeatPassword", { required: true})} />
+                            {repeatPasswordErrMsg ? <p className='text-xs text-red-500 mt-1'>{repeatPasswordErrMsg}</p> : undefined}
                         </div>
                         
                         {/* show password */}
