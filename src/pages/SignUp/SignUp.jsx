@@ -82,28 +82,30 @@ const SignUp = () => {
                         {/* fullname */}
                         <div className="w-full mb-3">
                             <label htmlFor="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Full Name</label>
-                            <input type="text" id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Full Name" {...register("fullname", { required: true})} />
+                            <input type="text" id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Full Name" {...register("fullname", { required: true})} />
                         </div>
 
                         {/* email */}
                         <div className="w-full mb-3">
                             <label htmlFor="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Email Address</label>
-                            <input type="email" id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Email Address" {...register("email", { required: true})} />
+                            <input type="email" id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Email Address" {...register("email", { required: true})} />
                         </div>
 
                         {/* create password */}
                         <div className="w-full mb-3">
                             <label htmlFor="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Create Password</label>
-                            <input type={showPassword ? 'text' : 'password'} id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Create Password" {...register("createPassword", { required: true})} />
+                            <input type={showPassword ? 'text' : 'password'} id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Create Password" {...register("createPassword", { required: true})} />
                             {createPasswordErrMsg ? <p className='text-xs text-red-500 mt-1'>{createPasswordErrMsg}</p> : undefined}
                         </div>
 
                         {/* repeat password */}
                         <div className="w-full mb-3">
                             <label htmlFor="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Repeat Password</label>
-                            <input type={showPassword ? 'text' : 'password'} id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Repeat Password" {...register("repeatPassword", { required: true})} />
+                            <input type={showPassword ? 'text' : 'password'} id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Repeat Password" {...register("repeatPassword", { required: true})} />
                             {repeatPasswordErrMsg ? <p className='text-xs text-red-500 mt-1'>{repeatPasswordErrMsg}</p> : undefined}
                         </div>
+
+                        {errMsg ? <p className='text-xs text-red-500 mt-1'>{errMsg}</p> : undefined}
                         
                         {/* show password */}
                         <div className="mt-5 flex gap-2 text-xs">
