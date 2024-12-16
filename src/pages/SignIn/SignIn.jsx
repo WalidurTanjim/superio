@@ -1,15 +1,33 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form"
 import SocialLogIn from '../../components/SocialLogIn/SocialLogIn';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [errMsg, setErrMsg] = useState('');
+    const { signInUser, forgotPassword } = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation(); 
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = (data) => {
         setErrMsg('');
+
+        // signInUserWithFirebase
+        signInUser(data.email, data.password)
+        .then(result => {
+            const user = result.user;
+            console.log("SignIn user:", user);
+            navigate('/');
+        })
+        .catch(err => {
+            console.error(err);
+            setErrMsg(err.message);
+        })
+
         console.log(data);
     };
 

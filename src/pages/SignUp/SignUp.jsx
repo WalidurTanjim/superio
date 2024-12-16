@@ -34,7 +34,8 @@ const SignUp = () => {
         createUser(data.email, data.repeatPassword)
         .then(result => {
             const user = result.user;
-            updateUserProfileHandler(user, data.username);
+            console.log("SignUp user:", user);
+            updateUserProfileHandler(user, data.fullname);
             verifyEmailHandler(user);
             navigate('/');
         })

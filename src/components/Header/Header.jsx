@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
+import useAuth from '../../hooks/useAuth';
 
 const Header = () => {
+    const [showProfileBtns, setShowProfileBtns] = useState(false);
+    const { user, logOut } = useAuth();
+
+    // signOutHandler
+    const signOutHandler = () => {
+        logOut()
+        .then(() => {
+            console.log('Logout successfully');
+        })
+        .catch(err => {
+            console.error(err);
+        })
+    }
+
+
     return (
         <header className="header sticky top-0 z-50">
             <div className="container mx-auto px-6 flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3 dark:bg-neutral-800">
@@ -22,9 +38,30 @@ const Header = () => {
                         </button>
 
                         {/* sign in button */}
-                        <button type="button" className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
-                            Button
-                        </button>
+                        {
+                            user ?
+                            <>
+                                {
+                                    user?.photoURL ? 
+                                    <img src={user?.photoURL} alt="" className='w-[30px] h-[30px] rounded-full border' /> :
+                                    <div className='relative'>
+                                        <p onClick={() => setShowProfileBtns(!showProfileBtns)} className='text-white bg-orange-600 px-2 py-1 rounded-full border border-orange-500 hover:bg-orange-400 active:bg-orange-500 cursor-pointer'>{user?.email.charAt(0).toUpperCase()}</p>
+                                        
+                                        {
+                                            showProfileBtns && user ?
+                                            <div className='absolute mt-3 right-0 border rounded-md w-40 bg-white'>
+                                                <p className='w-full py-2 px-2 text-sm hover:bg-gray-100 rounded-md'>Profile</p>
+                                                <p className='w-full py-2 px-2 text-sm hover:bg-gray-100 rounded-md' onClick={signOutHandler}>Sign out</p>
+                                            </div> : undefined
+                                        }
+                                    </div>
+
+                                }
+                            </> :
+                            <Link to='/signIn'>
+                                <button type="button" className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Sign in</button>
+                            </Link>
+                        }
                     </div>
 
                     {/* nav links */}
