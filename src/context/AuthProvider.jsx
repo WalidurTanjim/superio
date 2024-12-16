@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
     // verifyEmail
     const verifyEmail = user => {
         setLoading(true);
-        return sendEmailVerification(auth, user);
+        return sendEmailVerification(user);
     }
 
     // signInUser

@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form"
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SocialLogIn from '../../components/SocialLogIn/SocialLogIn';
+import useAuth from '../../hooks/useAuth';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
     const [createPasswordErrMsg, setCreatePasswordErrMsg] = useState('');
     const [repeatPasswordErrMsg, setRepeatPasswordErrMsg] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [errMsg, setErrMsg] = useState('');
+    const { createUser, updateUserProfile, verifyEmail } = useAuth();
     const passRegEx = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = (data) => {
@@ -24,7 +30,44 @@ const SignUp = () => {
             return setRepeatPasswordErrMsg('Both are not equal');
         }
 
+        // createUserWithFirebase
+        createUser(data.email, data.repeatPassword)
+        .then(result => {
+            const user = result.user;
+            updateUserProfileHandler(user, data.username);
+            verifyEmailHandler(user);
+            navigate('/');
+        })
+        .catch(err => {
+            console.error(err);
+            setErrMsg(err.message);
+        })
+
         console.log(data);
+    }
+
+    // updateUserProfileHandler
+    const updateUserProfileHandler = (user, username) => {
+        updateUserProfile(user, username)
+        .then(() => {
+            toast.success('Profile updated successfully');
+        })
+        .catch(err => {
+            console.error(err);
+            setErrMsg(err.message);
+        })
+    };
+
+    // verifyEmailHandler
+    const verifyEmailHandler = email => {
+        verifyEmail(email)
+        .then(() => {
+            toast.success('Verification mail send');
+        })
+        .catch(err => {
+            console.error(err);
+            setErrMsg(err.message);
+        })
     }
 
     return (
