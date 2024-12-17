@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import JobCard from '../../../components/JobCard/JobCard';
+import JobSearch from '../../../components/JobSearch/JobSearch';
 
 const FindJobs = () => {
     const loadedJobs = useLoaderData();
@@ -59,6 +60,9 @@ const FindJobs = () => {
                 {/* jobsDiv starts */}
                 <div className='jobsDiv grid-cols-1 lg:col-span-2 p-2'>
                     {/* header */}
+
+                    {/* search jobs */}
+                    <JobSearch />
 
                     {/* all jobs */}
                     {
