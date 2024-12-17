@@ -10,12 +10,9 @@ import SignUp from './pages/SignUp/SignUp'
 import AddJob from './pages/AddJob/AddJob'
 import PrivateRoute from './PrivateRoute/PrivateRoute'
 import MyJobPosts from './pages/MyJobPosts/MyJobPosts'
-import useAuth from './hooks/useAuth'
 import MyApplications from './pages/MyApplications/MyApplications'
 
 function App() {
-  const { user } = useAuth();
-  
   const routes = createBrowserRouter([
     {path: '/', errorElement: <ErrorPage />, element: <MainLayout />, children: [
       {path: '/', element: <Home />},
