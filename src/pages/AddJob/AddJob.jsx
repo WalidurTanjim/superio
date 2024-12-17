@@ -3,12 +3,16 @@ import { useForm } from "react-hook-form"
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import useAuth from '../../hooks/useAuth';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const AddJob = () => {
     const { user } = useAuth();
     const [file, setFile] = useState('');
     const [image, setImage] = useState('');
+    const [errMsg, setErrMsg] = useState('');
     const axiosPublic = useAxiosPublic();
+    const navigate = useNavigate();
     // console.log(file, image);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
@@ -34,6 +38,8 @@ const AddJob = () => {
 
     // react-hook-form onSubmit
     const onSubmit = async(data) => {
+        setErrMsg('');
+
         try{
             // responsibilities
             const responsibilities_array = data.responsibilities.split(',').map(item => item.trim()).filter(item => item);
@@ -58,7 +64,27 @@ const AddJob = () => {
                 const image_live_link = res?.data?.secure_url; // image live link from cloudinary
                 // console.log("Live link:", image_live_link);
                 data.company_logo = image_live_link;
-                console.log(data);
+                
+
+                // upload job to db
+                const fetchData = async() => {
+                    try{
+                        const res = await axiosPublic.post('/addJob', data);
+                        // console.log("Job added to db:", res.data);
+                        if(res?.data?.insertedId){
+                            Swal.fire({
+                                title: "Good job!",
+                                text: "You added a new job!",
+                                icon: "success"
+                            });
+                            navigate('/');
+                        }
+                    }catch(err){
+                        console.error(err);
+                        setErrMsg(err.message);
+                    }
+                };
+                fetchData();
             }
         
         }catch(err){
