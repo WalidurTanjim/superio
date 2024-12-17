@@ -1,25 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form"
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import useAuth from '../../hooks/useAuth';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const AddJob = () => {
     const { user } = useAuth();
+    const [file, setFile] = useState('');
+    const [image, setImage] = useState('');
+    const axiosPublic = useAxiosPublic();
+    // console.log(file, image);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = (data) => {
-        // responsibilities
-        const responsibilities_array = data.responsibilities.split(',').map(item => item.trim()).filter(item => item);
-        data.responsibilities = responsibilities_array;
 
-        // requirements
-        const requirements_array = data.requirements.split(',').map(item => item.trim()).filter(item => item);
-        data.requirements = requirements_array;
 
-        // hr_info
-        data.hr_name = user?.displayName;
-        data.hr_email = user?.email;
+    // company logo upload to cloudinary
+    // previewFile
+    const previewFile = file => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
 
-        console.log(data);
+        reader.onloadend = () => {
+            setImage(reader.result);
+        }
+    }
+
+    // handleChange
+    const handleChange = e => {
+        const logoFile = e.target.files[0];
+        setFile(logoFile);
+        previewFile(logoFile);
+    }
+
+
+    // react-hook-form onSubmit
+    const onSubmit = async(data) => {
+        try{
+            // responsibilities
+            const responsibilities_array = data.responsibilities.split(',').map(item => item.trim()).filter(item => item);
+            data.responsibilities = responsibilities_array;
+
+            // requirements
+            const requirements_array = data.requirements.split(',').map(item => item.trim()).filter(item => item);
+            data.requirements = requirements_array;
+
+            // hr_info
+            data.hr_name = user?.displayName;
+            data.hr_email = user?.email;
+
+            // upload image to cloudinary & get live link
+            const res = await axiosPublic.post('/', {
+                company_logo: image
+            })
+
+            // console.log('Company logo live link from cloudinary:', res.data)
+
+            if(res?.data){
+                const image_live_link = res?.data?.secure_url; // image live link from cloudinary
+                // console.log("Live link:", image_live_link);
+                data.company_logo = image_live_link;
+                console.log(data);
+            }
+        
+        }catch(err){
+            console.error(err);
+        }
     };
 
     return (
@@ -39,7 +83,7 @@ const AddJob = () => {
                     {/* company_logo */}
                     <div className="w-full mb-3">
                         <label htmlFor="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Company Logo</label>
-                        <input type="file" name="file-input" id="file-input" className="block w-full border border-gray-200 outline-none shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 file:bg-gray-50 file:border-0 file:me-4 file:py-2 file:px-4 dark:file:bg-neutral-700 dark:file:text-neutral-400" {...register("company_logo", { required: true })} />
+                        <input type="file" name="file-input" id="file-input" className="block w-full border border-gray-200 outline-none shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 file:bg-gray-50 file:border-0 file:me-4 file:py-2 file:px-4 dark:file:bg-neutral-700 dark:file:text-neutral-400" {...register("company_logo", { required: true })} accept='image/png, image/jpg, image/jpeg' onChange={e => handleChange(e)} />
                     </div>
                 </div>
 

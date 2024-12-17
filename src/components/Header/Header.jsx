@@ -50,9 +50,11 @@ const Header = () => {
                                         {
                                             showProfileBtns && user ?
                                             <div className='absolute mt-3 right-0 border rounded-md w-48 bg-white'>
-                                                <p className='w-full py-2 px-2 text-sm hover:bg-gray-100 rounded-md'>Profile</p>
-                                                <Link to="/addJob"><p className='w-full py-2 px-2 text-sm hover:bg-gray-100 rounded-md'>Add Job</p></Link>
-                                                <p className='w-full py-2 px-2 text-sm hover:bg-gray-100 rounded-md' onClick={signOutHandler}>Sign out</p>
+                                                <Link to="/profile"><p className='w-full py-2 px-3 text-sm hover:bg-gray-100 rounded-md'>Profile</p></Link>
+                                                <Link to="/application/me"><p className='w-full py-2 px-3 text-sm hover:bg-gray-100 rounded-md'>My Applications</p></Link>
+                                                <Link to="/addJob"><p className='w-full py-2 px-3 text-sm hover:bg-gray-100 rounded-md'>Add Job</p></Link>
+                                                <Link to="/myJobs"><p className='w-full py-2 px-3 text-sm hover:bg-gray-100 rounded-md'>My Job Posts</p></Link>
+                                                <p className='w-full py-2 px-3 text-sm hover:bg-gray-100 rounded-md' onClick={signOutHandler}>Sign out</p>
                                             </div> : undefined
                                         }
                                     </div>
