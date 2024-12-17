@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
 import JobCard from '../../../components/JobCard/JobCard';
 import JobSearch from '../../../components/JobSearch/JobSearch';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
 
 const FindJobs = () => {
-    const loadedJobs = useLoaderData();
     const [jobs, setJobs] = useState([]);
+    // console.log(jobs)
+    const axiosPublic = useAxiosPublic();
     
     useEffect(() => {
-        if(loadedJobs){
-            setJobs([...loadedJobs]);
-        }else{
-            setJobs([]);
-        }
+        const fetchData = async() => {
+            try{
+                const res = await axiosPublic.get('/jobs');
+                const data = await res.data;
+
+                if(data){
+                    setJobs([...data]);
+                }else{
+                    setJobs([]);
+                }
+            }catch(err){
+                console.error(err);
+            }
+        };
+        fetchData();
     }, []);
 
     return (

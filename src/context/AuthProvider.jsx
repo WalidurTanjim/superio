@@ -72,7 +72,7 @@ const AuthProvider = ({ children }) => {
                 const userInfo = { email: currentUser.email };
                 const fetchData = async() => {
                     try{
-                        const res = await axiosPublic.post('/createToken', userInfo, { withCredentials: true });
+                        const res = await axiosPublic.post('/createToken', userInfo);
                         console.log("response from createToken:", res.data);
                         setLoading(false);
                     }catch(err){
@@ -83,7 +83,7 @@ const AuthProvider = ({ children }) => {
             }else{
                 const fetchData = async() => {
                     try{
-                        const res = await axiosPublic.post('/logout', {}, { withCredentials: true });
+                        const res = await axiosPublic.post('/logout', {});
                         const data = await res.data;
                         console.log("response from logout:", data);
                         setLoading(false);
@@ -93,7 +93,7 @@ const AuthProvider = ({ children }) => {
                 };
                 fetchData();
             }
-            
+
             console.log("Current user:", currentUser);
         });
 

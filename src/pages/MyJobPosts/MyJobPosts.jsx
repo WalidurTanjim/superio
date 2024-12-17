@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PostedJob from '../../components/PostedJob/PostedJob';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import useAuth from '../../hooks/useAuth';
 
 const MyJobPosts = () => {
     const [jobs, setJobs] = useState([]);
-    const loadedJobs = useLoaderData();
+    // console.log(jobs);
+    const { user } = useAuth();
+    const axiosPublic = useAxiosPublic();
 
-    // useEffect(() => {
-    //     if (loadedJobs) {
-    //         setJobs([...loadedJobs]);
-    //     } else {
-    //         setJobs([]);
-    //     }
-    // }, []);
+    useEffect(() => {
+        const fetchData = async() => {
+            try{
+                const res = await axiosPublic.get(`/myPostedJobs?email=${user?.email}`);
+                const data = await res.data;
+
+                if(data){
+                    setJobs([...data]);
+                }else{
+                    setJobs([]);
+                }
+            }catch(err){
+                console.error(err);
+            }
+        };
+        fetchData();
+    }, []);
 
     return (
         <section className="myJobPosts container mx-auto px-6 py-10">
@@ -21,7 +35,7 @@ const MyJobPosts = () => {
                 {/* jobs length */}
                 <div className="flex items-center gap-x-3">
                     <h2 className="text-lg font-medium text-gray-800 dark:text-white">My posted jobs</h2>
-                    <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{loadedJobs?.length ? loadedJobs?.length : 0}</span>
+                    <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{jobs?.length ? jobs?.length : 0}</span>
                 </div>
 
                 {/* addJob btn */}
@@ -42,7 +56,7 @@ const MyJobPosts = () => {
                                         {/* company_logo & company_name */}
                                         <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             <div className="flex items-center gap-x-3">
-                                                <span>Name</span>
+                                                <span>Company Name</span>
                                             </div>
                                         </th>
 
@@ -88,7 +102,7 @@ const MyJobPosts = () => {
                                 {/* tbody */}
                                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                     {
-                                        loadedJobs?.map(job => <PostedJob key={job._id} job={job} />)
+                                        jobs?.map(job => <PostedJob key={job._id} job={job} />)
                                     }
                                 </tbody>
                             </table>
