@@ -11,6 +11,7 @@ import AddJob from './pages/AddJob/AddJob'
 import PrivateRoute from './PrivateRoute/PrivateRoute'
 import MyJobPosts from './pages/MyJobPosts/MyJobPosts'
 import useAuth from './hooks/useAuth'
+import MyApplications from './pages/MyApplications/MyApplications'
 
 function App() {
   const { user } = useAuth();
@@ -20,6 +21,7 @@ function App() {
       {path: '/', element: <Home />},
       {path: '/findJobs', element: <FindJobs />, loader: () => fetch('http://localhost:5000/jobs')},
       {path: '/findJobs/:category/:id', element: <JobDetails />, loader: ({params}) => fetch(`http://localhost:5000/findJobs/${params.category}/${params.id}`)},
+      {path: '/application/me', element: <PrivateRoute><MyApplications /></PrivateRoute>},
       {path: '/addJob', element: <PrivateRoute><AddJob /></PrivateRoute>},
       {path: '/myJobPosts', element: <PrivateRoute><MyJobPosts></MyJobPosts></PrivateRoute>, loader: () => fetch(`http://localhost:5000/myPostedJobs?email=${user?.email}`)},
       {path: '/signIn', element: <SignIn />},

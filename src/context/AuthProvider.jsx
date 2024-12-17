@@ -1,12 +1,14 @@
 import React, { createContext, useEffect, useState } from 'react';
 import auth from '../firebase/firebase.config';
 import { createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const axiosPublic = useAxiosPublic();
 
 
     // googleSignIn
@@ -65,7 +67,33 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
-            setLoading(false);
+
+            if(currentUser?.email){
+                const userInfo = { email: currentUser.email };
+                const fetchData = async() => {
+                    try{
+                        const res = await axiosPublic.post('/createToken', userInfo, { withCredentials: true });
+                        console.log("response from createToken:", res.data);
+                        setLoading(false);
+                    }catch(err){
+                        console.error(err);
+                    }
+                };
+                fetchData();
+            }else{
+                const fetchData = async() => {
+                    try{
+                        const res = await axiosPublic.post('/logout', {}, { withCredentials: true });
+                        const data = await res.data;
+                        console.log("response from logout:", data);
+                        setLoading(false);
+                    }catch(err){
+                        console.error(err);
+                    }
+                };
+                fetchData();
+            }
+            
             console.log("Current user:", currentUser);
         });
 

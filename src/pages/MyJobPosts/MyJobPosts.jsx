@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
-import PostApplyJob from '../../components/PostApplyJob/PostApplyJob';
+import PostedJob from '../../components/PostedJob/PostedJob';
 
 const MyJobPosts = () => {
     const [jobs, setJobs] = useState([]);
@@ -88,7 +88,7 @@ const MyJobPosts = () => {
                                 {/* tbody */}
                                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                     {
-                                        loadedJobs?.map(job => <PostApplyJob key={job._id} job={job} />)
+                                        loadedJobs?.map(job => <PostedJob key={job._id} job={job} />)
                                     }
                                 </tbody>
                             </table>

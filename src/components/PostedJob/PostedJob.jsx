@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PostApplyJob = ({ job }) => {
+const PostedJob = ({ job }) => {
     const { _id, company_name, company_logo, hr_email, title, category, job_type, job_category, salary } = job;
 
     return (
@@ -68,4 +68,4 @@ const PostApplyJob = ({ job }) => {
     );
 };
 
-export default PostApplyJob;
+export default PostedJob;
