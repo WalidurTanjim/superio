@@ -53,7 +53,7 @@ const Header = () => {
                                                 <Link to="/profile"><p className='w-full py-2 px-3 text-sm hover:bg-gray-100 rounded-md'>Profile</p></Link>
                                                 <Link to="/application/me"><p className='w-full py-2 px-3 text-sm hover:bg-gray-100 rounded-md'>My Applications</p></Link>
                                                 <Link to="/addJob"><p className='w-full py-2 px-3 text-sm hover:bg-gray-100 rounded-md'>Add Job</p></Link>
-                                                <Link to="/myJobs"><p className='w-full py-2 px-3 text-sm hover:bg-gray-100 rounded-md'>My Job Posts</p></Link>
+                                                <Link to="/myJobPosts"><p className='w-full py-2 px-3 text-sm hover:bg-gray-100 rounded-md'>My Job Posts</p></Link>
                                                 <p className='w-full py-2 px-3 text-sm hover:bg-gray-100 rounded-md' onClick={signOutHandler}>Sign out</p>
                                             </div> : undefined
                                         }

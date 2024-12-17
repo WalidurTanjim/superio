@@ -28,7 +28,7 @@ const SignIn = () => {
             setErrMsg(err.message);
         })
 
-        console.log(data);
+        // console.log(data);
     };
 
     return (
