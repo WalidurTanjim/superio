@@ -11,8 +11,12 @@ import AddJob from './pages/AddJob/AddJob'
 import PrivateRoute from './PrivateRoute/PrivateRoute'
 import MyJobPosts from './pages/MyJobPosts/MyJobPosts'
 import MyApplications from './pages/MyApplications/MyApplications'
+import UpdateJob from './pages/UpdateJob/UpdateJob'
+import useAuth from './hooks/useAuth'
 
 function App() {
+  const { user } = useAuth();
+
   const routes = createBrowserRouter([
     {path: '/', errorElement: <ErrorPage />, element: <MainLayout />, children: [
       {path: '/', element: <Home />},
@@ -21,6 +25,7 @@ function App() {
       {path: '/application/me', element: <PrivateRoute><MyApplications /></PrivateRoute>},
       {path: '/addJob', element: <PrivateRoute><AddJob /></PrivateRoute>},
       {path: '/myJobPosts', element: <PrivateRoute><MyJobPosts></MyJobPosts></PrivateRoute>},
+      {path: '/updateJob/:category/:id', element: <PrivateRoute><UpdateJob /></PrivateRoute>},
       {path: '/signIn', element: <SignIn />},
       {path: '/signUp', element: <SignUp />}
     ]}
