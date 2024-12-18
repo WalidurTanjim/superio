@@ -10,7 +10,9 @@ const SignIn = () => {
     const { signInUser, forgotPassword } = useAuth();
 
     const navigate = useNavigate();
-    const location = useLocation(); 
+    const location = useLocation();
+    const triggeredLocation = location.state?.from?.pathname;
+    // console.log(triggeredLocation);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = (data) => {
@@ -20,8 +22,8 @@ const SignIn = () => {
         signInUser(data.email, data.password)
         .then(result => {
             const user = result.user;
-            console.log("SignIn user:", user);
-            navigate('/');
+            // console.log("SignIn user:", user);
+            navigate(triggeredLocation || '/');
         })
         .catch(err => {
             console.error(err);

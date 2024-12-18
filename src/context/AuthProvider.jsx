@@ -73,7 +73,7 @@ const AuthProvider = ({ children }) => {
                 const fetchData = async() => {
                     try{
                         const res = await axiosPublic.post('/createToken', userInfo);
-                        console.log("response from createToken:", res.data);
+                        // console.log("response from createToken:", res.data);
                         setLoading(false);
                     }catch(err){
                         console.error(err);
@@ -85,7 +85,7 @@ const AuthProvider = ({ children }) => {
                     try{
                         const res = await axiosPublic.post('/logout', {});
                         const data = await res.data;
-                        console.log("response from logout:", data);
+                        // console.log("response from logout:", data);
                         setLoading(false);
                     }catch(err){
                         console.error(err);

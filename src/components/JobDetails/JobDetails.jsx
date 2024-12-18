@@ -1,11 +1,25 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { BookmarkIcon, MapPinIcon, BanknotesIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
+import useAuth from '../../hooks/useAuth';
 
 const JobDetails = () => {
     const loadedJob = useLoaderData();
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
     const { _id, title, job_description, responsibilities, requirements, expiration_date, salary, category, job_type, job_category, hr_name, hr_email, company_logo, company_name } = loadedJob;
     // console.log(loadedJob);
+
+    // handleApplyJob
+    const handleApplyJob = id => {
+        if(user){
+            // console.log('apply job:', id);
+            navigate(`/applyJob/${category}/${_id}`)
+        }else{
+            navigate('/signIn', { state: { from: location } }, { replace: true })
+        }
+    }
 
     return (
         <section className='jobDetails py-10'>
@@ -49,7 +63,7 @@ const JobDetails = () => {
                 {/* apply for jobs button & bookmark icon */}
                 <div className='col-span-1 lg:col-span-1'>
                     <div className='flex gap-3'>
-                        <button type="button" className="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Apply for job</button>
+                        <button type="button" className="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20" onClick={() => handleApplyJob(_id)}>Apply for job</button>
 
                         <div className='p-2 rounded-lg hover:bg-blue-100 active:bg-transparent'>
                             <BookmarkIcon className='size-5 text-gray-500 hover:text-gray-600 active:text-gray-500' />
