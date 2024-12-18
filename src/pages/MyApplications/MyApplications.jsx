@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import useAuth from '../../hooks/useAuth';
+import ApplicationJob from '../../components/ApplicatonJob/ApplicationJob';
 
 const MyApplications = () => {
     const [jobs, setJobs] = useState([]);
     const [errMsg, setErrMsg] = useState('');
     // console.log(jobs);
-    console.log(errMsg);
+    // console.log(errMsg);
     const { user } = useAuth();
     const axiosPublic = useAxiosPublic();
 
@@ -16,7 +17,7 @@ const MyApplications = () => {
                 const res = await axiosPublic.get(`/applyJob?email=${user?.email}`);
                 // const res = await axiosPublic.get(`/applyJob?email=tanjim@gmail.com`);
                 const data = await res?.data;
-                console.log(data);
+                // console.log(data);
                 
                 if(data){
                     setJobs([...data]);
@@ -101,7 +102,9 @@ const MyApplications = () => {
 
                                     {/* tbody */}
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                        
+                                        {
+                                            jobs?.map(job => <ApplicationJob key={job._id} job={job} />)
+                                        }
                                     </tbody>
                                 </table>
                             }
