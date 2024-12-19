@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { BookmarkIcon, MapPinIcon, BanknotesIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
 import useAuth from '../../hooks/useAuth';
+import moment from 'moment';
 
 const JobDetails = () => {
+    const [applyBtnDisabled, setApplyBtnDisabled] = useState(false);
     const loadedJob = useLoaderData();
     const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const formattedDate = moment().format('YYYY-MM-DD');
     const { _id, title, job_description, responsibilities, requirements, expiration_date, salary, category, job_type, job_category, hr_name, hr_email, company_logo, company_name } = loadedJob;
-    // console.log(loadedJob);
+    // console.log({formattedDate, expiration_date});
+
+    useEffect(() => {
+        if(formattedDate > expiration_date){
+            setApplyBtnDisabled(true);
+        }
+    }, []);
 
     // handleApplyJob
     const handleApplyJob = id => {
@@ -63,7 +72,10 @@ const JobDetails = () => {
                 {/* apply for jobs button & bookmark icon */}
                 <div className='col-span-1 lg:col-span-1'>
                     <div className='flex gap-3'>
-                        <button type="button" className="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20" onClick={() => handleApplyJob(_id)}>Apply for job</button>
+                        <div>
+                            <button type="button" disabled={applyBtnDisabled} className={`${applyBtnDisabled ? 'cursor-not-allow' : ''} py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20`} onClick={() => handleApplyJob(_id)}>Apply for job</button>
+                            {applyBtnDisabled ? <p className='text-xs text-red-500 mt-2'>Expiration date over. You can't apply this job. Try another.</p> : undefined}
+                        </div>
 
                         <div className='p-2 rounded-lg hover:bg-blue-100 active:bg-transparent'>
                             <BookmarkIcon className='size-5 text-gray-500 hover:text-gray-600 active:text-gray-500' />
