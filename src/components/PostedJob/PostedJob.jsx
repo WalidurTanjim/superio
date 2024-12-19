@@ -57,7 +57,7 @@ const PostedJob = ({ job }) => {
 
                     <div>
                         <h2 className="font-medium text-gray-800 dark:text-white ">{company_name}</h2>
-                        {/* <p className="text-sm font-normal text-gray-600 dark:text-gray-400">@authurmelo</p> */}
+                        <p className="text-xs font-normal text-gray-600 dark:text-gray-400">Total bids: <span className='text-blue-500 font-medium'>{job?.applicants && job?.applicants}</span></p>
                     </div>
                 </div>
             </td>
@@ -65,7 +65,7 @@ const PostedJob = ({ job }) => {
             <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                 <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                    <h2 className="text-sm font-normal text-emerald-500">Active</h2>
+                    <h2 className="text-xs font-normal text-emerald-500">Active</h2>
                 </div>
             </td>
 
