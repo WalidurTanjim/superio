@@ -5,9 +5,16 @@ import useAxiosPublic from '../../../hooks/useAxiosPublic';
 
 const FindJobs = () => {
     const [jobs, setJobs] = useState([]);
-    // console.log(jobs)
+    const [jobsCount, setJobsCount] = useState(0);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
+    const numberOfPages = Math.ceil(jobsCount / itemsPerPage);
+    const pages = [...Array(numberOfPages).keys()].map(num => num + 1);
+    console.log(currentPage)
+
     const axiosPublic = useAxiosPublic();
     
+    // fetch all jobs from database
     useEffect(() => {
         const fetchData = async() => {
             try{
@@ -18,6 +25,25 @@ const FindJobs = () => {
                     setJobs([...data]);
                 }else{
                     setJobs([]);
+                }
+            }catch(err){
+                console.error(err);
+            }
+        };
+        fetchData();
+    }, []);
+
+    // get jobs length from server
+    useEffect(() => {
+        const fetchData = async() => {
+            try{
+                const res = await axiosPublic.get('/jobsCount');
+                const data = await res?.data?.count;
+
+                if(data > 0){
+                    setJobsCount(data);
+                }else{
+                    setJobsCount(0);
                 }
             }catch(err){
                 console.error(err);
@@ -89,6 +115,15 @@ const FindJobs = () => {
                             }
                         </div>
                     }
+
+                    {/* pagination div starts */}
+                    <div className="pagination flex items-center justify-center py-5">
+                        <button onClick={() => setCurrentPage(currentPage > 1 ? currentPage - 1 : currentPage)} className={`text-sm px-3 border rounded-md bg-gray-50 hover:bg-gray-100 active:bg-gray-50 mx-1`}>Prev</button>
+                        {
+                            pages?.map(page => <button key={page} onClick={() => setCurrentPage(page)} className={`${currentPage === page && 'bg-orange-500 hover:bg-orange-600 active:bg-orange-400  border-orange-500 text-white'}  px-2 text-sm rounded-md border mx-1 bg-gray-50 hover:bg-gray-100 active:bg-gray-50`}>{page}</button>)
+                        }
+                        <button onClick={() => setCurrentPage(currentPage < pages.length ? currentPage + 1 : currentPage)} className={`text-sm px-3 border rounded-md bg-gray-50 hover:bg-gray-100 active:bg-gray-50 mx-1`}>Next</button>
+                    </div>
                 </div>
             </div>
         </section>
