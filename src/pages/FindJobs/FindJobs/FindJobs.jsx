@@ -5,12 +5,14 @@ import useAxiosPublic from '../../../hooks/useAxiosPublic';
 
 const FindJobs = () => {
     const [jobs, setJobs] = useState([]);
-    const [jobsCount, setJobsCount] = useState(0);
+    const [jobsCount, setJobsCount] = useState('');
     const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
+    // const [currentPage, setCurrentPage] = useState(1);
     const numberOfPages = Math.ceil(jobsCount / itemsPerPage);
-    const pages = [...Array(numberOfPages).keys()].map(num => num + 1);
-    console.log(currentPage)
+    const pages = [...Array(numberOfPages).keys()];
+    // const pages = [...Array(numberOfPages).keys()].map(num => num + 1);
+    // console.log('itemsPerPage:', itemsPerPage)
 
     const axiosPublic = useAxiosPublic();
     
@@ -18,7 +20,7 @@ const FindJobs = () => {
     useEffect(() => {
         const fetchData = async() => {
             try{
-                const res = await axiosPublic.get('/jobs');
+                const res = await axiosPublic.get(`/jobs?page=${currentPage}&size=${itemsPerPage}`);
                 const data = await res.data;
 
                 if(data){
@@ -31,7 +33,7 @@ const FindJobs = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [axiosPublic, currentPage, itemsPerPage, setJobs]);
 
     // get jobs length from server
     useEffect(() => {
@@ -50,7 +52,15 @@ const FindJobs = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [axiosPublic, setJobsCount]);
+
+    // handleItemsPerPage
+    const handleItemsPerPage = e => {
+        const val = parseInt(e.target.value);
+        setItemsPerPage(val);
+        setCurrentPage(0);
+        // setCurrentPage(1);
+    }
 
     return (
         <section className='findJobs container mx-auto px-6 py-10'>
@@ -118,11 +128,24 @@ const FindJobs = () => {
 
                     {/* pagination div starts */}
                     <div className="pagination flex items-center justify-center py-5">
-                        <button onClick={() => setCurrentPage(currentPage > 1 ? currentPage - 1 : currentPage)} className={`text-sm px-3 border rounded-md bg-gray-50 hover:bg-gray-100 active:bg-gray-50 mx-1`}>Prev</button>
+                        {/* prev button */}
+                        <button onClick={() => setCurrentPage(currentPage > 0 ? currentPage - 1 : currentPage)} className={`text-sm px-3 border rounded-md bg-gray-50 hover:bg-gray-100 active:bg-gray-50 mx-1`}>Prev</button>
+
+                        {/* pages */}
                         {
-                            pages?.map(page => <button key={page} onClick={() => setCurrentPage(page)} className={`${currentPage === page && 'bg-orange-500 hover:bg-orange-600 active:bg-orange-400  border-orange-500 text-white'}  px-2 text-sm rounded-md border mx-1 bg-gray-50 hover:bg-gray-100 active:bg-gray-50`}>{page}</button>)
+                            pages?.map(page => <button key={page} onClick={() => setCurrentPage(page)} className={`${currentPage === page && 'bg-orange-500 hover:bg-orange-600 active:bg-orange-400  border-orange-500 text-white'} px-2 text-sm rounded-md border mx-1 bg-gray-50 hover:bg-gray-100 active:bg-gray-50`}>{page}</button>)
                         }
-                        <button onClick={() => setCurrentPage(currentPage < pages.length ? currentPage + 1 : currentPage)} className={`text-sm px-3 border rounded-md bg-gray-50 hover:bg-gray-100 active:bg-gray-50 mx-1`}>Next</button>
+
+                        {/* next button */}
+                        <button onClick={() => setCurrentPage(currentPage < pages.length - 1 ? currentPage + 1 : currentPage)} className={`text-sm px-3 border rounded-md bg-gray-50 hover:bg-gray-100 active:bg-gray-50 mx-1`}>Next</button>
+
+                        {/* itemsPerPage dropdown */}
+                        <select className="px-3 pe-4 block border-gray-200 rounded-md text-sm outline-none border focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" value={itemsPerPage} onChange={handleItemsPerPage}>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
                     </div>
                 </div>
             </div>
