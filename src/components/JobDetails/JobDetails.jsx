@@ -1,20 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import { useLoaderData, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BookmarkIcon, MapPinIcon, BanknotesIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
 import useAuth from '../../hooks/useAuth';
 import moment from 'moment';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const JobDetails = () => {
+    const [job, setJob] = useState({});
     const [applyBtnDisabled, setApplyBtnDisabled] = useState(false);
-    const loadedJob = useLoaderData();
+    const { category: ctg, id } = useParams();
+    const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const formattedDate = moment().format('YYYY-MM-DD');
-    const { _id, title, job_description, responsibilities, requirements, expiration_date, salary, category, job_type, job_category, hr_name, hr_email, company_logo, company_name } = loadedJob;
+    const { _id, title, job_description, responsibilities, requirements, expiration_date, salary, category, job_type, job_category, hr_name, hr_email, company_logo, company_name } = job;
     // console.log({formattedDate, expiration_date});
 
     useEffect(() => {
+        // get job_details by category & id
+        const fetchData = async() => {
+            try{
+                const res = await axiosSecure.get(`/findJobs/${ctg}/${id}`);
+                const data = await res?.data;
+
+                if(data){
+                    setJob(data);
+                }
+            }catch(err){
+                console.error(err?.message);
+            }
+        };
+        fetchData();
+
+        // validate job_apply button
         if(formattedDate > expiration_date){
             setApplyBtnDisabled(true);
         }
@@ -53,7 +72,7 @@ const JobDetails = () => {
                             {/* salary */}
                             <h1 className='text-xs text-gray-500 flex items-center'>
                                 <BanknotesIcon className='size-3' />
-                                <span className='ps-1'>{salary.min} - {salary.max} {salary.currency}</span>
+                                <span className='ps-1'>{salary?.min} - {salary?.max} {salary?.currency}</span>
                             </h1>
         
                             {/* location */}

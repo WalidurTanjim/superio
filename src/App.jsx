@@ -19,7 +19,7 @@ function App() {
     {path: '/', errorElement: <ErrorPage />, element: <MainLayout />, children: [
       {path: '/', element: <Home />},
       {path: '/findJobs', element: <FindJobs />},
-      {path: '/findJobs/:category/:id', element: <JobDetails />, loader: ({params}) => fetch(`http://localhost:5000/findJobs/${params.category}/${params.id}`)},
+      {path: '/findJobs/:category/:id', element: <JobDetails />},
       {path: '/application/me', element: <PrivateRoute><MyApplications /></PrivateRoute>},
       {path: '/addJob', element: <PrivateRoute><AddJob /></PrivateRoute>},
       {path: '/myJobPosts', element: <PrivateRoute><MyJobPosts></MyJobPosts></PrivateRoute>},
