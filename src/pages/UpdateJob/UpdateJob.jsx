@@ -19,12 +19,12 @@ const UpdateJob = () => {
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
 
     useEffect(() => {
-        try{
-            const fetchData = async() => {
+        try {
+            const fetchData = async () => {
                 const res = await axiosPublic.get(`http://localhost:5000/updateJob/${category}/${id}?email=${user?.email}`);
                 const data = await res?.data;
-                
-                if(data){
+
+                if (data) {
                     setJob(data)
 
                     // set default values for the form fields
@@ -40,12 +40,12 @@ const UpdateJob = () => {
                     setValue("responsibilities", data.responsibilities);
                     setValue("requirements", data.requirements);
                     setValue("job_description", data.job_description);
-                }else{
+                } else {
                     setJob({});
                 }
             };
             fetchData();
-        }catch(err){
+        } catch (err) {
             console.error(err);
         }
     }, []);
@@ -69,10 +69,10 @@ const UpdateJob = () => {
     }
 
     // react-hook-form onSubmit
-    const onSubmit = async(data) => {
+    const onSubmit = async (data) => {
         setErrMsg('');
 
-        try{
+        try {
             // upload image to cloudinary & get live link
             const res = await axiosPublic.post('/', {
                 company_logo: image
@@ -80,7 +80,7 @@ const UpdateJob = () => {
 
             // console.log('Company logo live link from cloudinary:', res?.data?.secure_url)
 
-            if(res?.data){
+            if (res?.data) {
                 const image_live_link = res?.data?.secure_url;
                 data.company_logo = image_live_link;
                 // console.log(image_live_link)
@@ -88,12 +88,12 @@ const UpdateJob = () => {
                 const newData = data;
                 // console.log("New data:", newData);
 
-                try{
-                    const fetchData = async() => {
+                try {
+                    const fetchData = async () => {
                         const res = await axiosPublic.put(`/updateJob/${ctg}/${_id}`, newData);
                         // console.log('Response from server for update a job:', res?.data);
 
-                        if(res?.data?.modifiedCount > 0){
+                        if (res?.data?.modifiedCount > 0) {
                             Swal.fire({
                                 title: "Good job!",
                                 text: "Job info updated successfully!",
@@ -103,12 +103,12 @@ const UpdateJob = () => {
                         }
                     };
                     fetchData();
-                }catch(err){
+                } catch (err) {
                     console.error(err);
                     setErrMsg(err.message);
                 }
             }
-        }catch(err){
+        } catch (err) {
             console.error(err);
             setErrMsg(err.message);
         }
@@ -128,7 +128,7 @@ const UpdateJob = () => {
                     {/* company_name */}
                     <div className="w-full mb-3">
                         <label htmlFor="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Company Name</label>
-                        <input type="text" id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Company Name" {...register("company_name", { required: true })}  />
+                        <input type="text" id="input-label" className="py-2 px-4 block w-full outline-none border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Company Name" {...register("company_name", { required: true })} />
                     </div>
 
                     {/* company_logo */}
@@ -150,7 +150,7 @@ const UpdateJob = () => {
                     <div className="w-full mb-3">
                         <label htmlFor="input-label" className="block text-sm text-slate-700 mb-1 dark:text-white">Category</label>
                         <select className="py-2 px-4 pe-9 block w-full border border-gray-200 outline-none rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" {...register("category", { required: true })} >
-                            <option value="accounting/finance">Accounting/Finance</option>
+                            <option value="accounting & finance">Accounting & Finance</option>
                             <option value="marketing">Marketing</option>
                             <option value="design">Design</option>
                             <option value="development">Development</option>
