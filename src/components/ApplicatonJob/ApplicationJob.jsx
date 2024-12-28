@@ -47,7 +47,7 @@ const ApplicationJob = ({ job }) => {
             </td>
 
             {/* delete & edit btns */}
-            <td className="px-4 py-4 text-sm whitespace-nowrap">
+            <td className="px-4 py-4 text-sm whitespace-nowrap flex flex-col gap-y-1">
                 {/* <div className="delete_edit_btnContainer flex items-center gap-x-6">
                     <button className="deleteBtn text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
@@ -61,6 +61,8 @@ const ApplicationJob = ({ job }) => {
                         </svg>
                     </button>
                 </div> */}
+                <button type="button" className="w-full py-1 px-3 inline-flex items-center justify-center gap-x-2 text-xs font-medium rounded-md border border-transparent bg-orange-100 text-orange-600 hover:bg-orange-200 active:bg-orange-100 focus:outline-none focus:bg-orange-200 disabled:opacity-50 disabled:pointer-events-none dark:text-orange-600 dark:bg-orange-800/30 dark:hover:bg-orange-800/20 dark:active:bg-orange-800/30 dark:focus:bg-orange-800/20" disabled={true}>Pending</button>
+
                 <button type="button" className="w-full py-1 px-3 inline-flex items-center justify-center gap-x-2 text-xs font-medium rounded-md border border-transparent bg-red-100 text-red-600 hover:bg-red-200 active:bg-red-100 focus:outline-none focus:bg-red-200 disabled:opacity-50 disabled:pointer-events-none dark:text-red-600 dark:bg-red-800/30 dark:hover:bg-red-800/20 dark:active:bg-red-800/30 dark:focus:bg-red-800/20">Cancel</button>
             </td>
         </tr>

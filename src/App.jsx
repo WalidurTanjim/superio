@@ -13,6 +13,7 @@ import MyJobPosts from './pages/MyJobPosts/MyJobPosts'
 import MyApplications from './pages/MyApplications/MyApplications'
 import UpdateJob from './pages/UpdateJob/UpdateJob'
 import ApplyJob from './pages/ApplyJob/ApplyJob'
+import ViewApplicationByJobPost from './pages/ViewApplicationByJobPost/ViewApplicationByJobPost'
 
 function App() {
   const routes = createBrowserRouter([
@@ -22,7 +23,8 @@ function App() {
       {path: '/findJobs/:category/:id', element: <JobDetails />},
       {path: '/application/me', element: <PrivateRoute><MyApplications /></PrivateRoute>},
       {path: '/addJob', element: <PrivateRoute><AddJob /></PrivateRoute>},
-      {path: '/myJobPosts', element: <PrivateRoute><MyJobPosts></MyJobPosts></PrivateRoute>},
+      {path: '/myJobPosts', element: <PrivateRoute><MyJobPosts /></PrivateRoute>},
+      {path: '/viewApplications/:category/:id', element: <PrivateRoute><ViewApplicationByJobPost /></PrivateRoute>},
       {path: '/updateJob/:category/:id', element: <PrivateRoute><UpdateJob /></PrivateRoute>},
       {path: '/applyJob/:category/:id', element: <PrivateRoute><ApplyJob /></PrivateRoute>},
       {path: '/signIn', element: <SignIn />},
